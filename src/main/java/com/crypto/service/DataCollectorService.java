@@ -21,7 +21,7 @@ public class DataCollectorService {
     public void collectAndStoreData() {
         try {
             JsonNode data = coinCapService.getTopCryptos();
-            
+
             if (data != null && data.has("data")) {
                 data.get("data").forEach(crypto -> {
                     CryptoPrice price = new CryptoPrice();
@@ -31,10 +31,10 @@ public class DataCollectorService {
                     price.setVolume24h(crypto.get("volumeUsd24Hr").asDouble());
                     price.setMarketCap(crypto.get("marketCapUsd").asDouble());
                     price.setLastUpdated(LocalDateTime.now());
-                    
+
                     repository.save(price);
                 });
-                
+
                 log.info("Données collectées avec succès");
             }
         } catch (Exception e) {

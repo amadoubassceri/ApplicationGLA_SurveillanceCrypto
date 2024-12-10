@@ -9,15 +9,20 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j
 public class CoinCapService {
-    
+
     @Value("${coincap.api.url}")
     private String apiUrl;
-    
+
     @Value("${coincap.api.limit}")
     private int limit;
-    
-    private final RestTemplate restTemplate = new RestTemplate();
-    
+
+    private final RestTemplate restTemplate;
+
+    // Constructor for injecting dependencies
+    public CoinCapService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
     public JsonNode getTopCryptos() {
         try {
             String url = String.format("%s/assets?limit=%d", apiUrl, limit);

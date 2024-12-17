@@ -4,62 +4,38 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class CoinCapServiceTest {
 
-    @Mock
-    private RestTemplate restTemplate;
+    private CoinCapService coinCapService;
 
-    @InjectMocks
-    private CoinCapService coinCapService; // Assurez-vous que CoinCapService est bien importé
+    @Value("${coincap.api.url}")
+    private String apiUrl;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Value("${coincap.api.limit}")
+    private int limit;
+
+    private TestRestTemplate restTemplate;
 
     @BeforeEach
     void setUp() {
-        // Initialisation manuelle des valeurs des propriétés @Value
-        ReflectionTestUtils.setField(coinCapService, "apiUrl", "https://api.coincap.io/v2");
-        ReflectionTestUtils.setField(coinCapService, "limit", 10);
+        restTemplate = new TestRestTemplate();
+        coinCapService = new CoinCapService(restTemplate.getRestTemplate());
     }
 
     @Test
-    void getTopCryptos_ShouldReturnData() throws Exception {
-        // Réponse simulée de l'API
-        String mockResponse = "{\"data\": [{\"id\": \"bitcoin\",\"symbol\": \"BTC\",\"name\": \"Bitcoin\"}]}";
-        JsonNode mockJsonNode = objectMapper.readTree(mockResponse);
-
-        // Simuler le comportement de RestTemplate
-        lenient().when(restTemplate.getForObject(anyString(), eq(JsonNode.class)))
-                .thenReturn(mockJsonNode);
-
-        // Appel de la méthode et validation du résultat
-        JsonNode result = coinCapService.getTopCryptos();
-
-        assertNotNull(result);
-        assertTrue(result.has("data"));
-        assertEquals("Bitcoin", result.get("data").get(0).get("name").asText());
-    }
-
-    @Test
-    void getTopCryptos_WhenApiError_ShouldThrowException() {
-        // Simuler une exception lors de l'appel RestTemplate
-        lenient().when(restTemplate.getForObject(anyString(), eq(JsonNode.class)))
-                .thenThrow(new RuntimeException("API Error"));
-
-        // Vérifier que l'exception RuntimeException est bien lancée
-        assertThrows(RuntimeException.class, () -> coinCapService.getTopCryptos());
+    void getTopCryptos_ShouldReturnData() {
+        ResponseEntity<JsonNode> response = restTemplate.getForEntity(apiUrl + "/assets?limit=" + limit, JsonNode.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
     }
 }

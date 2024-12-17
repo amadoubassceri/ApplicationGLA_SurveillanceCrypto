@@ -1,4 +1,3 @@
-// CryptoPriceControllerTest
 package com.crypto.controller;
 
 import com.crypto.model.CryptoPrice;
@@ -6,41 +5,42 @@ import com.crypto.repository.CryptoPriceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.hasSize;
 
-@WebMvcTest(CryptoPriceController.class)
-public class CryptoPriceControllerTest {
+@SpringBootTest
+public class CryptoPriceControllerIntegrationTest {
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
     private CryptoPriceRepository cryptoPriceRepository;
 
-    private List<CryptoPrice> cryptoPrices;
+    @Autowired
+    private CryptoPriceController cryptoPriceController;
+
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        CryptoPrice bitcoin = new CryptoPrice("1", "Bitcoin", "BTC", 50000.0, 1000000.0, 1000000000.0, LocalDateTime.now());
-        CryptoPrice ethereum = new CryptoPrice("2", "Ethereum", "ETH", 3000.0, 500000.0, 500000000.0, LocalDateTime.now());
-        cryptoPrices = List.of(bitcoin, ethereum);
+        mockMvc = MockMvcBuilders.standaloneSetup(cryptoPriceController).build();
+
+        // Nettoyage et initialisation des données dans la base de données
+        cryptoPriceRepository.deleteAll();
+        cryptoPriceRepository.save(new CryptoPrice("1", "Bitcoin", "BTC", 50000.0, 1000000.0, 1000000000.0, LocalDateTime.now()));
+        cryptoPriceRepository.save(new CryptoPrice("2", "Ethereum", "ETH", 3000.0, 500000.0, 500000000.0, LocalDateTime.now()));
     }
 
     @Test
     void getCryptos_ShouldReturnTop10Cryptos() throws Exception {
-        when(cryptoPriceRepository.findTop10ByOrderByIdAsc()).thenReturn(cryptoPrices);
-
+        // Test d'intégration : appeler le contrôleur via MockMvc et vérifier les réponses HTTP
         mockMvc.perform(get("/api/cryptos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))

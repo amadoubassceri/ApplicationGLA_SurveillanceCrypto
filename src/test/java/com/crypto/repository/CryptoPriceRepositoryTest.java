@@ -5,11 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,31 +12,22 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
-@Testcontainers
 public class CryptoPriceRepositoryTest {
-
-    @Container
-    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.6");
 
     @Autowired
     private CryptoPriceRepository cryptoPriceRepository;
 
-    @DynamicPropertySource
-    static void setProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
-    }
-
     @BeforeEach
     void setUp() {
+        // Suppression de toutes les données avant chaque test
         cryptoPriceRepository.deleteAll();
     }
 
     @Test
     void findTop10ByOrderByIdAsc_ShouldReturnTop10Cryptos() {
-        // Prepare test data
+        // Préparation des données de test
         for (int i = 1; i <= 15; i++) {
             CryptoPrice crypto = new CryptoPrice();
-            crypto.setId(String.valueOf(i));
             crypto.setName("Crypto " + i);
             crypto.setSymbol("CRP" + i);
             crypto.setPrice(1000.0 * i);
@@ -51,18 +37,21 @@ public class CryptoPriceRepositoryTest {
             cryptoPriceRepository.save(crypto);
         }
 
-        // Execute
+        // Vérification du nombre total d'éléments insérés
+        System.out.println("Nombre total d'éléments insérés : " + cryptoPriceRepository.count());
+
+        // Exécution
         List<CryptoPrice> result = cryptoPriceRepository.findTop10ByOrderByIdAsc();
 
-        // Verify
+        // Vérification
         assertEquals(10, result.size());
-        assertEquals("1", result.get(0).getId());
-        assertEquals("10", result.get(9).getId());
+        assertEquals("Crypto 1", result.get(0).getName());
+        assertEquals("Crypto 10", result.get(9).getName());
     }
 
     @Test
     void save_ShouldPersistCryptoPrice() {
-        // Prepare
+        // Préparation
         CryptoPrice crypto = new CryptoPrice();
         crypto.setName("Bitcoin");
         crypto.setSymbol("BTC");
@@ -71,15 +60,15 @@ public class CryptoPriceRepositoryTest {
         crypto.setMarketCap(1000000000.0);
         crypto.setLastUpdated(LocalDateTime.now());
 
-        // Execute
+        // Exécution
         CryptoPrice savedCrypto = cryptoPriceRepository.save(crypto);
 
-        // Verify
+        // Vérifications
         assertNotNull(savedCrypto.getId());
         assertEquals("Bitcoin", savedCrypto.getName());
         assertEquals("BTC", savedCrypto.getSymbol());
 
-        // Verify it can be retrieved
+        // Vérification de récupération
         CryptoPrice retrieved = cryptoPriceRepository.findById(savedCrypto.getId()).orElse(null);
         assertNotNull(retrieved);
         assertEquals(savedCrypto.getName(), retrieved.getName());

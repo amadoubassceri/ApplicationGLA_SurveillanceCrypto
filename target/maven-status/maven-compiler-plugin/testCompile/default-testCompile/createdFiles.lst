@@ -1,0 +1,7 @@
+com\crypto\service\DataCollectorServiceTest.class
+com\crypto\controller\CryptoPriceControllerTest.class
+com\crypto\model\CryptoPriceTest.class
+com\crypto\service\CoinCapServiceTest.class
+com\crypto\controller\CryptoPriceControllerIntegrationTest.class
+com\crypto\repository\CryptoPriceRepositoryTest.class
+com\crypto\service\DataCollectorServiceIntegrationTest.class

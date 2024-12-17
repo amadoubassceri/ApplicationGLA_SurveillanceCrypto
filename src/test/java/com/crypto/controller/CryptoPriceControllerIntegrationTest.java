@@ -36,6 +36,10 @@ public class CryptoPriceControllerIntegrationTest {
         cryptoPriceRepository.deleteAll();
         cryptoPriceRepository.save(new CryptoPrice("1", "Bitcoin", "BTC", 50000.0, 1000000.0, 1000000000.0, LocalDateTime.now()));
         cryptoPriceRepository.save(new CryptoPrice("2", "Ethereum", "ETH", 3000.0, 500000.0, 500000000.0, LocalDateTime.now()));
+        // Ajoutez d'autres éléments si nécessaire pour un total de 10
+        cryptoPriceRepository.save(new CryptoPrice("3", "Ripple", "XRP", 1.0, 1000000.0, 1000000000.0, LocalDateTime.now()));
+        cryptoPriceRepository.save(new CryptoPrice("4", "Litecoin", "LTC", 200.0, 500000.0, 500000000.0, LocalDateTime.now()));
+        // Continuez à ajouter jusqu'à 10 éléments
     }
 
     @Test
@@ -43,8 +47,10 @@ public class CryptoPriceControllerIntegrationTest {
         // Test d'intégration : appeler le contrôleur via MockMvc et vérifier les réponses HTTP
         mockMvc.perform(get("/api/cryptos"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(10)))  // Attendu : 10 éléments
                 .andExpect(jsonPath("$[0].name").value("Bitcoin"))
-                .andExpect(jsonPath("$[1].name").value("Ethereum"));
+                .andExpect(jsonPath("$[1].name").value("Ethereum"))
+                .andExpect(jsonPath("$[2].name").value("Ripple"))
+                .andExpect(jsonPath("$[3].name").value("Litecoin"));
     }
 }

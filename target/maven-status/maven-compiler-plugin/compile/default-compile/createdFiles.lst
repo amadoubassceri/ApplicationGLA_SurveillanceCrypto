@@ -1,0 +1,9 @@
+com\crypto\service\DataCollectorService.class
+com\crypto\CryptoCollectorApplication.class
+com\crypto\model\CryptoPrice.class
+com\crypto\config\AppConfig.class
+com\crypto\controller\CryptoPriceController.class
+com\crypto\model\User.class
+com\crypto\service\CoinCapService.class
+com\crypto\repository\CryptoPriceRepository.class
+com\crypto\repository\UserRepository.class

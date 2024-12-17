@@ -25,8 +25,6 @@
         <sonar.projectKey>com.crypto:crypto-collector</sonar.projectKey> <!-- Clé du projet SonarQube -->
         <sonar.projectName>Crypto Collector</sonar.projectName> <!-- Nom du projet SonarQube -->
         <sonar.projectVersion>1.0</sonar.projectVersion> <!-- Version du projet SonarQube -->
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-        <sonar.login>sqa_e30d0d5920e4cae300b253011677b17e97c43507</sonar.login>
     </properties>
 
 
@@ -97,6 +95,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 

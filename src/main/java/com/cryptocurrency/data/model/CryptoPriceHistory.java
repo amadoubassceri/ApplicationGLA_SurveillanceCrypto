@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * This class represents a CryptoPriceHistory object.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 public class CryptoPriceHistory {
 

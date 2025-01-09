@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * The UserController class is a Spring REST controller for managing users.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @RestController
 @RequestMapping("/api/users")

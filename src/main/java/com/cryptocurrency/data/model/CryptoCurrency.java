@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * This class represents a CryptoCurrency object.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASSO
  */
 @Entity
 @Table(name = "crypto_currency")

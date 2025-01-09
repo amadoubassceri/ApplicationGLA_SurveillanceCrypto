@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * The UserRepository interface is a Spring Data JPA repository for managing user data.
  * UserRepository interface.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

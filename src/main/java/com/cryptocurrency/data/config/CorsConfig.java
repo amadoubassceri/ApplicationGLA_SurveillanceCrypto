@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * The CorsConfig class is a Spring configuration class for configuring CORS (Cross-Origin Resource Sharing).
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Configuration
 public class CorsConfig {

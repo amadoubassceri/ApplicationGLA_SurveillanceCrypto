@@ -48,8 +48,8 @@ public class AlertsService {
      * @return a list of alerts for the given user
      */
     public List<Alerts> findByUser(User user) {
-        User user1 = userRepository.findById(user.getId()).orElse(null);
-        return alertsRepository.findByUser(user1);
+        //User user1 = userRepository.findById(user.getId()).orElse(null);
+        return alertsRepository.findByUser(user);
     }
 
     /**

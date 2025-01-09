@@ -8,7 +8,7 @@ import org.springframework.session.web.http.CookieSerializer;
 
 /**
  * The CookieConfig class is a Spring configuration class for configuring session cookies.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Configuration
 public class CookieConfig {

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The AlertsRepository interface is a Spring Data JPA repository for managing alerts.
  * AlertsRepository interface.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Repository
 public interface AlertsRepository extends JpaRepository<Alerts, Long> {

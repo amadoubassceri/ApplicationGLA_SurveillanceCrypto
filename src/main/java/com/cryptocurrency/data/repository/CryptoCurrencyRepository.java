@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * The CryptoCurrencyRepository interface is a Spring Data JPA repository for managing cryptocurrency data.
  * CryptoCurrencyRepository interface.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Repository
 public interface CryptoCurrencyRepository extends JpaRepository<CryptoCurrency, Long> {

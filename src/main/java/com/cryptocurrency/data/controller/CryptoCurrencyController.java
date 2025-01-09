@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * The CryptoCurrencyController class is a Spring REST controller for managing cryptocurrencies.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @RestController
 @RequestMapping("/api/cryptocurrencies")

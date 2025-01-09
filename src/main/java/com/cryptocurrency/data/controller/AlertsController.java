@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * The AlertsController class is a Spring REST controller for managing alerts.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @RestController
 @RequestMapping("/api/alerts")

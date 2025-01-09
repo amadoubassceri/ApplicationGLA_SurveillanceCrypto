@@ -152,7 +152,7 @@ public class DataCollectionService {
      * This method is scheduled to run every 60 seconds and collects market data from the CoinCap API.
      * The collected data is then saved to the database.
      */
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 6000000)
     public void collectMarketData() {
         logger.info("Starting data collection ......");
 

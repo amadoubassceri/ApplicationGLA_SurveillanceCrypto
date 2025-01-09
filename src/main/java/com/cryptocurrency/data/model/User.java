@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * This class represents a User object.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Entity
 @Table(name = "user")

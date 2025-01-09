@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /**
  * This class represents an Alerts object.
- * Author: Mouhamadou Ahibou DIALLO
+ * Author: Amadou BASS
  */
 @Entity
 @Table(name = "alert")

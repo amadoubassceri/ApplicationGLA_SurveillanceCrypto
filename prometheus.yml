@@ -1,7 +1,5 @@
-global:
-  scrape_interval: 15s
-
 scrape_configs:
-  - job_name: 'spring-boot'
+  - job_name: 'spring-boot-app'
     static_configs:
-      - targets: ['crypto-collector-service:8080']
+      - targets: ['localhost:8080']  # Assurez-vous que l'URL cible est votre Spring Boot backend
+    metrics_path: '/actuator/prometheus'  # Cet endpoint expose les métriques pour Prometheus

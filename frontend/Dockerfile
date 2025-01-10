@@ -18,6 +18,8 @@ FROM nginx:alpine
 
 # Copier les fichiers construits de React vers le répertoire de Nginx
 COPY --from=build /app/build /usr/share/nginx/html
+# Ajouter cette ligne après COPY --from=build
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exposer le port 80 pour accéder à l'application frontend
 EXPOSE 80

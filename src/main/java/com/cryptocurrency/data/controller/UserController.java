@@ -32,6 +32,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private  EmailService emailService;
+
     /**
      * Creates a new user with the given details.
      *
@@ -241,8 +244,8 @@ public class UserController {
 
         String token = user.getTokenHash();
 
-        EmailService emailService = new EmailService();
-        String resetLink = "http://172.20.10.2:3000/reset-password?token=" + token;
+
+        String resetLink = " http://172.20.144.1:3000/reset-password?token=" + token;
         emailService.sendEmail(email, "Réinitialisation de mot de passe",
                 "Cliquez sur ce lien pour réinitialiser votre mot de passe : " + resetLink);
 
